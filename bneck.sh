@@ -9,12 +9,12 @@
 module load libsequence
 
 N=100000 # wild Ne
-t_recover=5000 # generations since recovery
+t_recover=1000 # generations since recovery
 mu=$(echo "3*10 ^ -8" | bc -l) # mutation rate
 region=100000 # length of region
 theta=$( echo "4*$N*$mu*$region" | bc -l ) # assume rho = theta
-bneck_N=4650 # Ne during bneck
-bneck_dur=1000 # generations
+bneck_N=1000 # Ne during bneck
+bneck_dur=5000 # generations
 alpha=$( echo "-(1/(($bneck_dur)/(4*$N)))*l($bneck_N/$N)" | bc -l ) # growth rate
 n1=100 # sampled chroms from each pop
 n2=100
@@ -30,3 +30,4 @@ echo "$N $t_recover $mu $region $theta $bneck_N $bneck_dur $alpha $n1 $n2" 1>&2
 
 #exponential growth
 echo "ms $(( $n1 + $n2 )) 10 -t $theta -r $theta $region -I 2 $n1 $n2 -n 2 $( echo "($N - $bneck_N)/$N" | bc -l ) -eg $( echo  "$t_recover/(4*$N)" | bc -l ) 1 $alpha -eg $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 0 -ej $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 2 -eN $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 -seed $seed" 1>&2 
+ms $(( $n1 + $n2 )) 10 -t $theta -r $theta $region -I 2 $n1 $n2 -n 2 $( echo "($N - $bneck_N)/$N" | bc -l ) -eg $( echo  "$t_recover/(4*$N)" | bc -l ) 1 $alpha -eg $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 0 -ej $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 2 -eN $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 -seed $seed | msstats -I 2 $n1 $n2 -F
