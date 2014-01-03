@@ -1,0 +1,35 @@
+Module BUILD 1.6 Loaded.
+Module slurm/2.6.2 loaded 
+Module libsequence/1.7.8 loaded 
+#!/bin/bash -l
+#SBATCH -D /home/jri/projects/bneck
+#SBATCH -J bneck
+#SBATCH -o outs/out-%A.%a.txt
+#SBATCH -p serial
+#SBATCH --array=1-100
+#SBATCH -e errors/error-%A.%a.txt
+
+module load libsequence
+
+N=100000 # wild Ne
+t_recover=1000 # generations since recovery
+mu=$(echo "3*10 ^ -8" | bc -l) # mutation rate
+region=100000 # length of region
+theta=$( echo "4*$N*$mu*$region" | bc -l ) # assume rho = theta
+bneck_N=23250 # Ne during bneck
+bneck_dur=5000 # generations
+alpha=$( echo "-(1/(($bneck_dur)/(4*$N)))*l($bneck_N/$N)" | bc -l ) # growth rate
+n1=100 # sampled chroms from each pop
+n2=100
+
+seed="$RANDOM $RANDOM $RANDOM"
+
+cat bneck.sh 1>&2
+echo "ms $(( $n1 + $n2 )) 10 -t $theta -r $theta $region -I 2 $n1 $n2 -n 2 $( echo "($N - $bneck_N)/$N" | bc -l ) -en $( echo  "$t_recover/(4*$N)" | bc -l ) 1 $( echo "$bneck_N/$N" | bc -l ) -ej $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 2 -eN $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 -seed $seed " 1>&2
+ms $(( $n1 + $n2 )) 10 -t $theta -r $theta $region -I 2 $n1 $n2 -n 2 $( echo "($N - $bneck_N)/$N" | bc -l ) -en $( echo  "$t_recover/(4*$N)" | bc -l ) 1 $( echo "$bneck_N/$N" | bc -l ) -ej $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 2 -eN $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 -seed $seed | msstats -I 2 $n1 $n2 -F
+
+#straight growth
+#echo "ms 10 1000 -t $theta -eG $( echo  "$t_recover/(4*$N)" | bc -l ) $alpha -eG $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 0 -seed $seed | samplestats "
+#ms 10 1000 -t $theta -eG $( echo  "$t_recover/(4*$N)" | bc -l ) $alpha -eG $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 0 -seed $seed | samplestats | cut -f 10 | /home/jri/src/msdir/stats
+#ms $(( $n1 + $n2 )) 1000 -t $theta -r $theta $region -I 2 $n1 $n2 -n 2 $( echo "($N - $bneck_N)/$N" | bc -l ) -eG $( echo  "$t_recover/(4*$N)" | bc -l ) 1 $( echo "$bneck_N/$N" | bc -l ) -ej $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 2 -eN $( echo "($t_recover+$bneck_dur)/(4*$N)" | bc -l ) 1 -seed $seed | msstats -I 2 $n1 $n2 
+ms 200 10 -t 1200.00000000000000000000 -r 1200.00000000000000000000 100000 -I 2 100 100 -n 2 .76750000000000000000 -en .00250000000000000000 1 .23250000000000000000 -ej .01500000000000000000 1 2 -eN .01500000000000000000 1 -seed 22375 15459 5572 
