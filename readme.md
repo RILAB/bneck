@@ -4,4 +4,8 @@ Do some bneck sims to show similarity and differences of bneck models.
 
 See [r code](http://rpubs.com/rossibarra/bneck) for descriptions of models.
 
-Currently using the 
+# SLIM sims
+
+Doing some sims with [SLIM](http://www.stanford.edu/~messer/software) to try look at deleterious variants and D.
+
+# Sims with fwdpp as well, in fwdpp.sh
