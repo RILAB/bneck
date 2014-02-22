@@ -18,5 +18,5 @@ results files for first round of fwdpp sims in results, see [bneck_ftw R code an
 
 split.pl takes ms output from fwdpp (which alternates netural/selected) and splits into two files. should automate rest of job to get msstats output
 
-
+cleanup.sh takes ms output runs split.pl, msstats, writes to neutral and selected files for separate runs
 
