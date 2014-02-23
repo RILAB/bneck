@@ -6,6 +6,7 @@
 #SBATCH -p bigmem
 
 module load libsequence
-for i in temp/out.*; do scripts/split.pl $i; done
-for i in temp/selected.*; do cat $i | msstats > results/$i.stats; done
-for i in temp/neutral.*; do cat $i | msstats > results/$i.stats; done
+cd temp
+for i in out.*; do ../scripts/split.pl $i; done
+for i in selected.*; do cat $i | msstats > ../results/$i.stats; done
+for i in neutral.*; do cat $i | msstats > ../results/$i.stats; done
