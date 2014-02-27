@@ -20,3 +20,5 @@ split.pl takes ms output from fwdpp (which alternates netural/selected) and spli
 
 cleanup.sh takes ms output runs split.pl, msstats, writes to neutral and selected files for separate runs
 
+bneck_selection_dist.cc is a modified version of the bneck_selection.cc code from Kevin Thornton's [fwdpp](https://github.com/molpopgen/fwdpp). Instead of inputting a constant s on the command line, you enter the mean for an exponential and a percent of selected mutations which are positive.  All selected mutations (positive and negative) are drawn from the same exponential.
+
