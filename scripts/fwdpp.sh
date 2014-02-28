@@ -9,11 +9,11 @@ module load libsequence
 
 seed=$(( $SLURM_ARRAY_TASK_ID*$RANDOM ))
 N=15000
-neutral_theta=18
+neutral_theta=6
 rho=$neutral_theta
-selected_theta=.18
+selected_theta=12
 s=$1 #selection <- CHECK WHICH VERSION OF CODE YOU ARE USING. s is either fixed s or mean of exponential!
-pp=0.0 #proportion of slected mutations that are positively selected
+pp=0.00 #proportion of slected mutations that are positively selected
 h=0.1 #dominance
 g1=150000 #generations between N and N2?
 N2=15000 #bneck size
@@ -25,5 +25,5 @@ nreps=1
 if [[ -z $h || -z $s ]]; then exit 1; fi
 
 cat scripts/fwdpp.sh 1>&2
-~/src/fwdpp/examples/bneck_selection_dist $N $neutral_theta $selected_theta $rho $s $pp $h $g1 $N2 $N3 $g2 $n $nreps $seed  > temp/out.$SLURM_ARRAY_JOB_ID.$SLURM_ARRAY_TASK_ID
+~/src/fwdpp/examples/bneck_selection_dist $N $neutral_theta $selected_theta $rho $s $pp $h $g1 $N2 $N3 $g2 $n $nreps $seed > temp/out.$SLURM_ARRAY_JOB_ID.$SLURM_ARRAY_TASK_ID.txt  
 
