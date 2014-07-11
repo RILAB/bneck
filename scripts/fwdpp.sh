@@ -13,12 +13,12 @@ neutral_theta=12
 selected_theta=24
 rho=$(( $neutral_theta + $selected_theta ))
 s=$1 #selection <- CHECK WHICH VERSION OF CODE YOU ARE USING. s is either fixed s or mean of exponential!
-pp=0.001 #proportion of slected mutations that are positively selected
-h=0.1 #dominance
+pp=0.001 #proportion of selected mutations that are positively selected
+h=0.01 #dominance
 g1=150000 #generations between N and N2?
 N2=12000 #bneck size
 N3=1500000 #new NE at end
-n=1000 #number samples
+n=23 #number samples
 g2=90
 nreps=1
 
