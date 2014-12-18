@@ -3,10 +3,12 @@ use strict;
 use warnings;
 
 open FILE, "<$ARGV[0]";
-my @temp=split(/\./,$ARGV[0]);
-my $run=$temp[1];
-open N, ">>neutral.$run.txt"; 
-open S, ">>selected.$run.txt"; 
+my $temp=$ARGV[0];
+$temp=~m/out-(\d+)\.(\d+)\.txt/;
+my $job=$1;
+my $run=$2;
+open N, ">>neutral.$job.$run.txt"; 
+open S, ">>selected.$job.$run.txt"; 
 
 my $neutral=0; 
 
