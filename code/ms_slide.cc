@@ -36,17 +36,18 @@ int main(int argc, char *argv[])
 	}
 	int rv;
 	int physical_scale=alignment_length; // keep this same as alignment_length for simulated ms data 
- 	while( (rv=d.fromfile(stdin)) != EOF )
+	while( (rv=d.fromfile(stdin)) != EOF )
 	{
+ 		unsigned win=0;
 		Sequence::PolyTableSlice<Sequence::PolySites> windows(d.sbegin(),d.send(),window_size,step_size,alignment_length,physical_scale);
       		Sequence::PolyTableSlice<Sequence::PolySites>::const_iterator itr = windows.begin();
         	while(itr < windows.end())
         	{
         		Sequence::PolySites window = windows.get_slice(itr);
            		Sequence::PolySNP analyzeWindow(&window);
-			cout << analyzeWindow.ThetaPi()   << '\t' << analyzeWindow.NumSingletons() << '\t';
+			cout << win << "\t" << analyzeWindow.ThetaPi()   << '\t' << analyzeWindow.NumSingletons() << '\n';
         	     	++itr;
+			++win;
 		}
-		cout << '\n';
 	}
 }	
